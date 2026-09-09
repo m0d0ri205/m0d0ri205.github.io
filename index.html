@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html lang="ko" data-lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Jeongmin (m0d0ri205) — Security Portfolio</title>
+<meta name="description" content="이정민(m0d0ri205) — 웹 취약점 분석과 AI Agent 기반 보안 자동화를 연구하는 보안 엔지니어의 포트폴리오">
+<style>
+  :root{
+    --bg:#ffffff;
+    --bg-soft:#f7f7f8;
+    --border:#e6e6e8;
+    --text:#141414;
+    --text-soft:#5b5b60;
+    --text-faint:#8a8a90;
+    --accent:#1f2937;
+    --chip-bg:#141414;
+    --chip-text:#ffffff;
+    --radius:10px;
+    --maxw:880px;
+  }
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;}
+  body{
+    background:var(--bg);
+    color:var(--text);
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Pretendard,Roboto,"Noto Sans KR","Helvetica Neue",Arial,sans-serif;
+    line-height:1.65;
+    -webkit-font-smoothing:antialiased;
+  }
+  a{color:var(--accent);text-decoration:none;border-bottom:1px solid transparent;}
+  a:hover{border-bottom-color:var(--accent);}
+  code, .mono{font-family:"SFMono-Regular",Consolas,"Liberation Mono",Menlo,monospace;}
+
+  [data-lang="ko"] .en{display:none;}
+  [data-lang="en"] .ko{display:none;}
+
+  .wrap{max-width:var(--maxw);margin:0 auto;padding:0 24px;}
+
+  header.site-header{
+    position:sticky;top:0;background:rgba(255,255,255,.92);backdrop-filter:blur(6px);
+    border-bottom:1px solid var(--border);z-index:20;
+  }
+  .nav-inner{display:flex;align-items:center;justify-content:space-between;padding:16px 24px;max-width:var(--maxw);margin:0 auto;}
+  .brand{font-weight:700;font-size:15px;letter-spacing:.2px;}
+  .brand .mono{color:var(--text-soft);font-weight:500;}
+  nav.links{display:flex;align-items:center;gap:22px;font-size:14px;}
+  nav.links a.navlink{color:var(--text);border:none;}
+  nav.links a.navlink.active{color:var(--text);font-weight:700;border-bottom:2px solid var(--text);padding-bottom:2px;}
+  #langToggle{
+    border:1px solid var(--border);background:var(--bg);color:var(--text);
+    font-size:12px;font-weight:600;padding:6px 10px;border-radius:999px;cursor:pointer;
+    font-family:inherit;letter-spacing:.5px;
+  }
+  #langToggle:hover{background:var(--bg-soft);}
+
+  section{padding:56px 0;}
+  section.hero{padding-top:64px;padding-bottom:40px;}
+  h1{font-size:32px;line-height:1.3;margin:0 0 14px;}
+  h2.section-title{font-size:13px;text-transform:uppercase;letter-spacing:1.6px;color:var(--text-faint);margin:0 0 24px;font-weight:700;}
+  p.lede{font-size:17px;color:var(--text-soft);max-width:640px;}
+
+  .chips{display:flex;flex-wrap:wrap;gap:8px;margin-top:22px;}
+  .chip{background:var(--bg-soft);border:1px solid var(--border);color:var(--text);font-size:13px;padding:6px 12px;border-radius:999px;}
+
+  .divider{border:none;border-top:1px solid var(--border);margin:0;}
+
+  .project-group{margin-bottom:40px;}
+  .project-group:last-child{margin-bottom:0;}
+  .group-label{font-size:12px;font-weight:700;letter-spacing:1.2px;text-transform:uppercase;color:var(--text-faint);margin-bottom:14px;}
+  .card{
+    border:1px solid var(--border);border-radius:var(--radius);padding:22px 24px;background:var(--bg);
+    margin-bottom:16px;
+  }
+  .card:last-child{margin-bottom:0;}
+  .card-head{display:flex;flex-wrap:wrap;align-items:baseline;justify-content:space-between;gap:8px;margin-bottom:6px;}
+  .card-title{font-size:17px;font-weight:700;}
+  .card-meta{font-size:13px;color:var(--text-faint);}
+  .card ul{margin:10px 0 0;padding-left:18px;}
+  .card li{margin-bottom:6px;font-size:14.5px;color:var(--text-soft);}
+  .card li strong{color:var(--text);}
+  .card-links{margin-top:12px;font-size:13.5px;}
+  .outcome{margin-top:12px;padding-top:12px;border-top:1px dashed var(--border);font-size:14px;}
+  .outcome b{font-size:12px;text-transform:uppercase;letter-spacing:.6px;color:var(--text-faint);display:block;margin-bottom:4px;}
+
+  .timeline{list-style:none;margin:0;padding:0;}
+  .timeline li{display:flex;gap:18px;padding:12px 0;border-bottom:1px solid var(--border);font-size:14.5px;}
+  .timeline li:last-child{border-bottom:none;}
+  .timeline .t-period{flex:0 0 150px;color:var(--text-faint);font-size:13px;padding-top:1px;}
+  .timeline .t-body strong{display:block;font-size:15px;margin-bottom:2px;}
+  .timeline .t-body span.sub{color:var(--text-soft);font-size:13.5px;}
+
+  .award-list{list-style:none;margin:0;padding:0;}
+  .award-list li{padding:10px 0;border-bottom:1px solid var(--border);font-size:14.5px;color:var(--text-soft);}
+  .award-list li:last-child{border-bottom:none;}
+  .award-list li strong{color:var(--text);}
+  .award-list .tag{display:inline-block;font-size:11px;font-weight:700;color:var(--text-faint);border:1px solid var(--border);border-radius:999px;padding:1px 8px;margin-left:6px;vertical-align:middle;}
+
+  .subsection{margin-top:34px;}
+  .subsection:first-child{margin-top:0;}
+  .subsection h3{font-size:14px;margin:0 0 12px;color:var(--text);}
+
+  footer{border-top:1px solid var(--border);padding:40px 0 60px;}
+  footer .contact-row{display:flex;flex-wrap:wrap;gap:18px;font-size:14.5px;margin-bottom:16px;}
+  footer .copyright{font-size:12.5px;color:var(--text-faint);}
+
+  @media (max-width:600px){
+    .nav-inner{padding:14px 18px;}
+    nav.links{gap:12px;}
+    h1{font-size:26px;}
+    section{padding:40px 0;}
+    .timeline li{flex-direction:column;gap:2px;}
+    .timeline .t-period{flex:none;}
+  }
+</style>
+</head>
+<body>
+
+<header class="site-header">
+  <div class="nav-inner">
+    <div class="brand">Jeongmin <span class="mono">(m0d0ri205)</span></div>
+    <nav class="links">
+      <a class="navlink active" href="index.html"><span class="ko">포트폴리오</span><span class="en">Portfolio</span></a>
+      <a class="navlink" href="resume.html"><span class="ko">이력서</span><span class="en">Resume</span></a>
+      <a class="navlink" href="https://github.com/m0d0ri205" target="_blank" rel="noopener">GitHub</a>
+      <button id="langToggle" type="button" aria-label="toggle language">EN</button>
+    </nav>
+  </div>
+</header>
+
+<main>
+
+  <section class="hero wrap">
+    <h1>Jeongmin <span class="mono">(m0d0ri205)</span></h1>
+    <p class="lede ko">웹 취약점 분석 경험과 MCP 기반 AI Agent 개발 역량을 바탕으로 모의해킹 업무를 자동화(Security Automation)하는 엔지니어입니다. CTF 문제 출제 및 프로젝트를 통해 취약점 식별, 검증, 공격 재현까지 수행했습니다. 웹 취약점 분석 및 공격 흐름을 실제로 구현할 수 있는 모의해킹 엔지니어입니다.</p>
+    <p class="lede en">A security engineer who automates penetration-testing work by combining hands-on web vulnerability analysis with MCP-based AI Agent development. Through CTF challenge design and personal projects, I've worked across the full loop of vulnerability identification, verification, and exploit reproduction.</p>
+    <div class="chips">
+      <span class="chip">Web Hacking</span>
+      <span class="chip">MCP (Model Context Protocol)</span>
+      <span class="chip">Python</span>
+      <span class="chip">TypeScript</span>
+      <span class="chip">Burp Suite</span>
+      <span class="chip">Docker</span>
+      <span class="chip">Git</span>
+    </div>
+  </section>
+
+  <hr class="divider">
+
+  <section id="education" class="wrap">
+    <h2 class="section-title"><span class="ko">교육 및 활동</span><span class="en">Education</span></h2>
+    <ul class="timeline">
+      <li>
+        <div class="t-period">2023.03 —</div>
+        <div class="t-body"><strong><span class="ko">순천향대학교</span><span class="en">Soonchunhyang University</span></strong><span class="sub"><span class="ko">정보보호학과</span><span class="en">Information Security</span></span></div>
+      </li>
+      <li>
+        <div class="t-period">2023 —</div>
+        <div class="t-body"><strong>JA Korea Alumni</strong></div>
+      </li>
+      <li>
+        <div class="t-period">2025.03 — 2025.09</div>
+        <div class="t-body"><strong>KITRI · WhiteHat School 3<span class="ko">기</span><span class="en">rd</span></strong><span class="sub">Vibe Hacking with MCP</span></div>
+      </li>
+      <li>
+        <div class="t-period">2023.03 —</div>
+        <div class="t-body"><strong>SecurityFirst</strong><span class="sub"><span class="ko">2024 부회장 · 2025 회장</span><span class="en">2024 Vice President · 2025 President</span></span></div>
+      </li>
+      <li>
+        <div class="t-period">2024.08 —</div>
+        <div class="t-body"><strong>TeamH4C : TOOR</strong><span class="sub"><span class="ko">자동화 개발 연구 파트</span><span class="en">Automation R&amp;D team</span></span></div>
+      </li>
+    </ul>
+  </section>
+
+  <hr class="divider">
+
+  <section id="projects" class="wrap">
+    <h2 class="section-title"><span class="ko">프로젝트</span><span class="en">Projects</span></h2>
+
+    <div class="project-group">
+      <div class="group-label">WEB</div>
+      <div class="card">
+        <div class="card-head">
+          <div class="card-title">Pentest Agent for KR</div>
+          <div class="card-meta">2026.02 — <span class="ko">1인</span><span class="en">Solo</span></div>
+        </div>
+        <ul>
+          <li class="ko">"주요정보통신기반시설 기술적 취약점 분석 평가 방법 상세 가이드" 체크리스트 기반 자동 점검 Agent 개발</li>
+          <li class="en">Built an automated inspection agent based on the checklist from Korea's "Detailed Guide to Technical Vulnerability Assessment of Major Information &amp; Communications Infrastructure"</li>
+        </ul>
+        <div class="card-links"><a href="https://github.com/m0d0ri205/Pentest-Agent-for-KR" target="_blank" rel="noopener">GitHub ↗</a></div>
+        <div class="outcome">
+          <b><span class="ko">성과</span><span class="en">Outcome</span></b>
+          <span class="ko">체크리스트 기반 웹 취약점 자동 진단 프로토타입 구현</span>
+          <span class="en">Implemented a checklist-driven prototype for automated web vulnerability diagnosis</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="project-group">
+      <div class="group-label">MCP</div>
+      <div class="card">
+        <div class="card-head">
+          <div class="card-title">Alpa-MCP</div>
+          <div class="card-meta">2025.08 — 2025.11</div>
+        </div>
+        <p class="lede" style="font-size:14.5px;margin:0 0 6px;">
+          <span class="ko">npm 의존성 특화 웹 자동화 분석 도구 개발 (SBOM, Perplexity, KaliMCP)</span>
+          <span class="en">An npm-dependency-focused web automation analysis tool (SBOM, Perplexity, KaliMCP)</span>
+        </p>
+        <ul>
+          <li><strong class="mono">KaliMCP</strong> <span class="ko">기반 npm 의존성 one-day 특화 자동화 풀이 도구</span><span class="en">KaliMCP-based automation focused on npm dependency one-day vulnerabilities</span></li>
+          <li><span class="ko"><strong>담당 파트</strong>: 도구 선별 및 전체 아키텍처 설계, 테스트 문제 선별 및 기능 테스트 진행. npm 의존성 파악 및 웹 해킹 경험을 바탕으로 분석·설계를 담당</span>
+              <span class="en"><strong>Role</strong>: tool selection and overall architecture design, test-case selection and functional testing — took this on based on prior experience with npm dependency analysis and web hacking</span></li>
+        </ul>
+        <div class="card-links"><a href="https://github.com/m0d0ri205/a-mcp" target="_blank" rel="noopener">GitHub ↗</a></div>
+        <div class="outcome">
+          <b><span class="ko">성과</span><span class="en">Outcome</span></b>
+          <span class="ko">npm 의존성 기반 웹 취약점 자동 분석 파이프라인 설계</span>
+          <span class="en">Designed an automated web-vulnerability analysis pipeline based on npm dependencies</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="project-group">
+      <div class="group-label">SBOM / DevSecOps</div>
+      <div class="card">
+        <div class="card-head">
+          <div class="card-title">Stellar-Agent</div>
+          <div class="card-meta">2025.07 — <span class="ko">3인</span><span class="en">Team of 3</span></div>
+        </div>
+        <ul>
+          <li><span class="ko">IaC 룰셋 및 모델 컨텍스트 프로토콜(MCP)을 통한 AI 에이전트 기반 하이브리드 DevSecOps 정책 감사 프레임워크</span>
+              <span class="en">A hybrid DevSecOps policy-audit framework built on an AI agent, driven by IaC rulesets and the Model Context Protocol (MCP)</span></li>
+          <li><span class="ko">Trivy, kics 등의 도구를 MCP로 자동화, IaC 데이터 분석 및 자동 패치 가이드 제공</span>
+              <span class="en">Automated tools like Trivy and kics via MCP; analyzed IaC data and provided automated patch guidance</span></li>
+          <li><span class="ko"><strong>담당 파트</strong>: IaC BOM 생성 및 MCP 구조 설계·제작 — Agent 및 SBOM 경험을 바탕으로 담당</span>
+              <span class="en"><strong>Role</strong>: IaC BOM generation and MCP architecture design — took this on based on prior Agent and SBOM experience</span></li>
+        </ul>
+        <div class="outcome">
+          <b><span class="ko">성과</span><span class="en">Outcome</span></b>
+          <ul style="margin-top:4px;">
+            <li class="ko">IaC 보안 분석 및 자동 패치 가이드 제공 시스템 구현</li>
+            <li class="en">Built a system for IaC security analysis and automated patch-guide generation</li>
+            <li><strong class="ko">2025 SW융합대학 학술제 대상</strong><strong class="en">Grand Prize, 2025 SCHU SW Convergence College Festival</strong></li>
+            <li class="ko">한국데이터사이언스학회 논문 제출</li>
+            <li class="en">Paper submitted to the Korea Data Science Society</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <hr class="divider">
+
+  <section id="activity" class="wrap">
+    <h2 class="section-title"><span class="ko">수상 및 활동</span><span class="en">Awards &amp; Activity</span></h2>
+
+    <div class="subsection">
+      <h3><span class="ko">수상 이력</span><span class="en">Awards</span></h3>
+      <ul class="award-list">
+        <li><strong>2026</strong> — <span class="ko">제5회 한양 해킹방어대회(HCTF) 일반부 우수상</span><span class="en">Excellence Award (General Track), 5th Hanyang Hacking Defense Contest (HCTF)</span><span class="tag">한국정보처리학회</span></li>
+        <li><strong>2025</strong> — <span class="ko">HolyShield Contest 동상</span><span class="en">Bronze Prize, HolyShield Contest</span><span class="tag"><span class="ko">가톨릭대학교 총장상</span><span class="en">Catholic Univ. President's Award</span></span></li>
+        <li><strong>2025</strong> — <span class="ko">SCHU AI·SW Festival — SW융합대학 학술제 대상 (3인)</span><span class="en">Grand Prize, SCHU AI·SW Festival — SW Convergence College Festival (team of 3)</span></li>
+        <li><strong>2025</strong> — <span class="ko">KISIA · YISF(청소년 정보보호 페스티벌) 공로상</span><span class="en">KISIA · YISF (Youth Information Security Festival) Contribution Award</span></li>
+        <li><strong>2024</strong> — <span class="ko">KISIA · YISF(청소년 정보보호 페스티벌) 공로상</span><span class="en">KISIA · YISF (Youth Information Security Festival) Contribution Award</span></li>
+        <li><span class="ko">YISF(청소년 정보보호 페스티벌) organization member</span><span class="en">YISF (Youth Information Security Festival) organization member</span></li>
+        <li><strong>2022</strong> — <span class="ko">JA KOREA-삼성 창업놀이터 페스티벌 우수상 (비즈니스 모델 전시 부문) — PARKIMINATION(불법 주차 탐지 아이템)</span><span class="en">Excellence Award, JA Korea–Samsung Startup Playground Festival (Business Model Exhibition) — PARKIMINATION (illegal-parking detection)</span></li>
+        <li><strong>2021</strong> — <span class="ko">국민대학교 &amp; JA Korea 온라인 창업 캠프 최우수(고등부) — Moving Book(도서 자동 운반 시스템)</span><span class="en">Top Award (High School Track), Kookmin Univ. &amp; JA Korea Online Startup Camp — Moving Book (automated book-transport system)</span></li>
+        <li><strong>2021</strong> — <span class="ko">JA KOREA-삼성 창업놀이터 페스티벌 우수상 (비즈니스 모델 비칭 부문) — Moving Book(도서 자동 운반 시스템)</span><span class="en">Excellence Award, JA Korea–Samsung Startup Playground Festival (Business Model Pitching) — Moving Book (automated book-transport system)</span></li>
+      </ul>
+    </div>
+
+    <div class="subsection">
+      <h3><span class="ko">외부 활동</span><span class="en">External Activity</span></h3>
+      <ul class="award-list">
+        <li><strong>2026</strong> — <span class="ko">한양대학교 학생보안팀 ICEWALL — 동계 IST(ICEWALL Security Training) 강사 활동 (Vibe Hacking for WEB): Agent 개념 및 MCP를 통한 웹 해킹 실습 진행</span>
+        <span class="en">Hanyang University student security team ICEWALL — Winter IST (ICEWALL Security Training) instructor (Vibe Hacking for WEB): led hands-on web hacking sessions covering agent concepts and MCP</span></li>
+      </ul>
+    </div>
+
+    <div class="subsection">
+      <h3><span class="ko">CTF 문제 출제 및 운영</span><span class="en">CTF Challenge Design &amp; Operation</span></h3>
+      <ul class="award-list">
+        <li class="ko">SecurityFirst 연초 &amp; 연말 CTF (2023, 2024, 2025 — 총 5회)</li>
+        <li class="en">SecurityFirst New Year &amp; Year-End CTF (2023, 2024, 2025 — 5 events total)</li>
+        <li>YISF(<span class="ko">청소년 정보보호 페스티벌</span><span class="en">Youth Information Security Festival</span>) 2024, 2025</li>
+        <li class="ko">MSG CTF (명지대·건국대·중앙대·상명대·순천향대 연합 오프라인 CTF)</li>
+        <li class="en">MSG CTF (joint offline CTF — Myongji, Konkuk, Chung-Ang, Sangmyung, Soonchunhyang universities)</li>
+        <li class="ko">2025 건국대학교 SecurityFact 내부 CTF</li>
+        <li class="en">2025 Konkuk University SecurityFact internal CTF</li>
+      </ul>
+      <p style="font-size:14px;color:var(--text-soft);margin-top:14px;">
+        <span class="ko">2023.12 —, CTF 출제 문제와 직접 제작한 워게임 정리 (Web, Misc, CVE, Bugbounty case)</span>
+        <span class="en">Since 2023.12 — self-authored CTF challenges and wargames (Web, Misc, CVE, Bugbounty cases)</span>
+      </p>
+    </div>
+
+    <div class="subsection">
+      <h3><span class="ko">논문</span><span class="en">Publications</span></h3>
+      <ul class="award-list">
+        <li class="ko">한국데이터사이언스학회 — 2025년 동계 종합 학술 대회 논문집</li>
+        <li class="en">Korea Data Science Society — 2025 Winter Joint Academic Conference Proceedings</li>
+      </ul>
+    </div>
+  </section>
+
+</main>
+
+<footer class="wrap">
+  <div class="contact-row">
+    <a href="https://github.com/m0d0ri205" target="_blank" rel="noopener">github.com/m0d0ri205</a>
+    <a href="resume.html"><span class="ko">이력서 보기 →</span><span class="en">View resume →</span></a>
+  </div>
+  <div class="copyright">© 2026 Jeongmin (m0d0ri205)</div>
+</footer>
+
+<script>
+(function(){
+  var root = document.documentElement;
+  var btn = document.getElementById('langToggle');
+  function apply(lang){
+    root.setAttribute('data-lang', lang);
+    root.setAttribute('lang', lang);
+    btn.textContent = lang === 'ko' ? 'EN' : 'KO';
+    try { localStorage.setItem('site-lang', lang); } catch(e) {}
+  }
+  var saved = 'ko';
+  try { saved = localStorage.getItem('site-lang') || 'ko'; } catch(e) {}
+  apply(saved);
+  btn.addEventListener('click', function(){
+    apply(root.getAttribute('data-lang') === 'ko' ? 'en' : 'ko');
+  });
+})();
+</script>
+
+</body>
+</html>
